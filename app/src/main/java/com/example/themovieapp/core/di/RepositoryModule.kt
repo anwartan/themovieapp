@@ -8,6 +8,8 @@ import com.example.themovieapp.core.utils.AppExecutors
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 //@Module(includes = [NetworkModule::class, DatabaseModule::class])
@@ -18,7 +20,8 @@ import javax.inject.Singleton
 //
 //}
 
-@Module(includes = [NetworkModule::class, DatabaseModule::class])
+@Module
+@InstallIn(SingletonComponent::class)
 class RepositoryModule {
 
     @Singleton

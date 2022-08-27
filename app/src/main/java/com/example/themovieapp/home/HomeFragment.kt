@@ -17,27 +17,21 @@ import com.example.themovieapp.core.ui.MovieAdapter
 import com.example.themovieapp.core.ui.ViewModelFactory
 import com.example.themovieapp.databinding.FragmentHomeBinding
 import com.example.themovieapp.detail.DetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
 
-    @Inject
-    lateinit var factory: ViewModelFactory
 
-    private val homeViewModel: HomeViewModel by viewModels {
-        factory
-    }
+
+    private val homeViewModel: HomeViewModel by viewModels ()
 
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (requireActivity().application as MyApplication).appComponent.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

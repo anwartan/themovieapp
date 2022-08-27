@@ -14,8 +14,9 @@ import com.example.themovieapp.favorite.FavoriteFragment
 import com.example.themovieapp.home.HomeFragment
 import com.example.themovieapp.search.SearchActivity
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding : ActivityMainBinding

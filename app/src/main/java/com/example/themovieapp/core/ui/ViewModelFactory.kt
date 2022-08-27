@@ -1,19 +1,10 @@
 package com.example.themovieapp.core.ui
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.themovieapp.core.di.Injection
-import com.example.themovieapp.core.domain.usecase.MovieUseCase
-import com.example.themovieapp.detail.DetailViewModel
-import com.example.themovieapp.di.AppScope
-import com.example.themovieapp.favorite.FavoriteViewModel
-import com.example.themovieapp.home.HomeViewModel
-import com.example.themovieapp.search.SearchViewModel
 import javax.inject.Inject
 import javax.inject.Provider
 
-@AppScope
 class ViewModelFactory @Inject constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) :

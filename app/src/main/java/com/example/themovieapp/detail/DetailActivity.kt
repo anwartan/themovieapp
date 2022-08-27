@@ -9,26 +9,22 @@ import com.example.themovieapp.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
 import com.example.themovieapp.core.ui.ViewModelFactory
 import com.example.themovieapp.databinding.ActivityDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
-
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
     }
 
-    @Inject
-    lateinit var factory: ViewModelFactory
 
-    private val detailViewModel: DetailViewModel by viewModels {
-        factory
-    }
+    private val detailViewModel: DetailViewModel by viewModels()
 
     private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)

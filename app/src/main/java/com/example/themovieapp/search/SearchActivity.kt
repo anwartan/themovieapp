@@ -12,21 +12,17 @@ import com.example.themovieapp.core.ui.MovieListAdapter
 import com.example.themovieapp.core.ui.ViewModelFactory
 import com.example.themovieapp.databinding.ActivitySearchBinding
 import com.example.themovieapp.detail.DetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
 
 
-    @Inject
-    lateinit var factory: ViewModelFactory
-
-    private val searchViewModel: SearchViewModel by viewModels {
-        factory
-    }
+    private val searchViewModel: SearchViewModel by viewModels ()
 
     private lateinit var binding: ActivitySearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.domain.model.MovieFavorite
 import com.example.themovieapp.core.domain.usecase.MovieUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-
+@HiltViewModel
 class DetailViewModel @Inject constructor(private val movieUseCase: MovieUseCase):ViewModel() {
 
     private val idMovie = MutableLiveData<Int>()
