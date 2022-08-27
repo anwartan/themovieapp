@@ -1,28 +1,43 @@
 package com.example.themovieapp.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.themovieapp.MyApplication
 import com.example.themovieapp.core.data.Resource
 import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.ui.MovieAdapter
 import com.example.themovieapp.core.ui.ViewModelFactory
 import com.example.themovieapp.databinding.FragmentHomeBinding
 import com.example.themovieapp.detail.DetailActivity
+import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val homeViewModel: HomeViewModel by viewModels {
+        factory
+    }
+
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as MyApplication).appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,8 +64,8 @@ class HomeFragment : Fragment() {
             movieAdapter.onItemClick = movieItemClick
             popularAdapter.onItemClick = movieItemClick
             topRatedAdapter.onItemClick = movieItemClick
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            homeViewModel = ViewModelProvider(this,factory)[HomeViewModel::class.java]
+//            val factory = ViewModelFactory.getInstance(requireActivity())
+//            homeViewModel = ViewModelProvider(this,factory)[HomeViewModel::class.java]
 
 
             homeViewModel.movie.observe(viewLifecycleOwner,{movie->

@@ -1,15 +1,16 @@
 package com.example.themovieapp.detail
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.themovieapp.MyApplication
 import com.example.themovieapp.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
 import com.example.themovieapp.core.ui.ViewModelFactory
 import com.example.themovieapp.databinding.ActivityDetailBinding
-import com.example.themovieapp.favorite.FavoriteViewModel
 import java.util.*
+import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {
 
@@ -17,15 +18,22 @@ class DetailActivity : AppCompatActivity() {
         const val EXTRA_DATA = "extra_data"
     }
 
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val detailViewModel: DetailViewModel by viewModels {
+        factory
+    }
+
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailViewModel: DetailViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarDetail)
-        val factory = ViewModelFactory.getInstance(this)
-        detailViewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
+
         val idMovie = intent.getIntExtra(EXTRA_DATA, -1)
         detailViewModel.getMovieDetail(idMovie)
 

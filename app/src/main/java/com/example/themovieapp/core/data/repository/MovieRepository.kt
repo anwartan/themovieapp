@@ -14,25 +14,28 @@ import com.example.themovieapp.core.domain.repository.IMovieRepository
 import com.example.themovieapp.core.utils.AppExecutors
 import com.example.themovieapp.core.utils.Mapper.MovieFavoriteMapper
 import com.example.themovieapp.core.utils.Mapper.MovieMapper
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieRepository private constructor(
+@Singleton
+class MovieRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ):IMovieRepository{
-    companion object {
-        @Volatile
-        private var instance: MovieRepository? = null
-
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localDataSource: LocalDataSource,
-            appExecutors: AppExecutors
-        ): MovieRepository =
-            instance ?: synchronized(this) {
-                instance ?: MovieRepository(remoteData,localDataSource,appExecutors)
-            }
-    }
+//    companion object {
+//        @Volatile
+//        private var instance: MovieRepository? = null
+//
+//        fun getInstance(
+//            remoteData: RemoteDataSource,
+//            localDataSource: LocalDataSource,
+//            appExecutors: AppExecutors
+//        ): MovieRepository =
+//            instance ?: synchronized(this) {
+//                instance ?: MovieRepository(remoteData,localDataSource,appExecutors)
+//            }
+//    }
 
     override fun getNowPlayingMovie(): LiveData<Resource<List<Movie>>> {
         return object : NetworkAndFetch<List<Movie>,List<MovieResponse>>(appExecutors){

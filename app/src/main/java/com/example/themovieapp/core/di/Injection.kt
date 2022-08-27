@@ -13,18 +13,18 @@ import com.example.themovieapp.core.utils.AppExecutors
 
 object Injection {
 
-    private fun provideRepository(context: Context): IMovieRepository {
-        val database = MovieDatabase.getInstance(context)
-        val remoteDataSource = RemoteDataSource.getInstance(ApiConfig.provideApiService())
-        val localDataSource = LocalDataSource.getInstance(database.movieDao())
-        val appExecutors = AppExecutors()
-        return MovieRepository.getInstance(remoteDataSource,localDataSource,appExecutors)
-    }
-
-    fun provideMovieUseCase(context: Context):MovieUseCase{
-        val repository = provideRepository(context)
-        return MovieInteractor(repository)
-    }
+//    private fun provideRepository(context: Context): IMovieRepository {
+//        val database = MovieDatabase.getInstance(context)
+//        val remoteDataSource = RemoteDataSource.getInstance(ApiConfig.provideApiService(ApiConfig.provideOkHttpClient()))
+//        val localDataSource = LocalDataSource.getInstance(database.movieDao())
+//        val appExecutors = AppExecutors()
+//        return MovieRepository.getInstance(remoteDataSource,localDataSource,appExecutors)
+//    }
+//
+//    fun provideMovieUseCase(context: Context):MovieUseCase{
+//        val repository = provideRepository(context)
+//        return MovieInteractor(repository)
+//    }
 
 
 }

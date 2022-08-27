@@ -1,13 +1,13 @@
 package com.example.themovieapp.core.domain.usecase
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.themovieapp.core.data.Resource
 import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.domain.model.MovieFavorite
 import com.example.themovieapp.core.domain.repository.IMovieRepository
+import javax.inject.Inject
 
-class MovieInteractor(private val movieRepository: IMovieRepository) :MovieUseCase {
+class MovieInteractor @Inject constructor (private val movieRepository: IMovieRepository) :MovieUseCase {
     override fun getNowPlayingMovies(): LiveData<Resource<List<Movie>>> {
         return movieRepository.getNowPlayingMovie()
     }
