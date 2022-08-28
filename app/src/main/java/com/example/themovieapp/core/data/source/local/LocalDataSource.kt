@@ -1,10 +1,10 @@
 package com.example.themovieapp.core.data.source.local
 
-import androidx.lifecycle.LiveData
 import com.example.themovieapp.core.data.source.local.entity.FavoriteEntity
 import com.example.themovieapp.core.data.source.local.entity.MovieEntity
 import com.example.themovieapp.core.data.source.local.entity.MovieFavoriteEntity
 import com.example.themovieapp.core.data.source.local.room.MovieDao
+import io.reactivex.Flowable
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,16 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class LocalDataSource @Inject constructor(private val movieDao: MovieDao) {
 
-//    companion object {
-//        private var instance: LocalDataSource? = null
-//
-//        fun getInstance(movieDao: MovieDao): LocalDataSource =
-//            instance ?: synchronized(this) {
-//                instance ?: LocalDataSource(movieDao)
-//            }
-//    }
-
-    fun getNowPlayingMovies(): LiveData<List<MovieEntity>> = movieDao.getNowPlayingMovies()
+    fun getNowPlayingMovies(): Flowable<List<MovieEntity>> = movieDao.getNowPlayingMovies()
 
     fun insertMovies(movieList: List<MovieEntity>) = movieDao.insertMovies(movieList)
 
@@ -35,16 +26,19 @@ class LocalDataSource @Inject constructor(private val movieDao: MovieDao) {
 
     }
 
-    fun getMovie(id: Int): LiveData<MovieEntity?> = movieDao.getMovie(id)
+    fun getMovie(id: Int): Flowable<MovieEntity?> = movieDao.getMovie(id)
 
-    fun searchMoviesByName(name: String): LiveData<List<MovieEntity>> {
+    fun searchMoviesByName(name: String): Flowable<List<MovieEntity>> {
         return movieDao.searchMoviesByName("%$name%")
     }
 
-    fun getFavoriteMovies(): LiveData<List<MovieFavoriteEntity>> = movieDao.getFavoriteMovies()
+    fun getFavoriteMovies(): Flowable<List<MovieFavoriteEntity>> = movieDao.getFavoriteMovies()
 
-    fun getFavoriteMovie(id: Int): LiveData<MovieFavoriteEntity?> {
-        return movieDao.getFavoriteMovie(id)
+    fun isFavoriteMovie(id: Int): Flowable<Boolean> {
+        return movieDao.getFavoriteMovie(id).flatMap { movies ->
+            return@flatMap Flowable.just(movies.isNotEmpty())
+        }
+
     }
 
 }

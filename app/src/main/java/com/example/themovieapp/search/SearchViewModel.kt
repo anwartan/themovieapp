@@ -1,9 +1,6 @@
 package com.example.themovieapp.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.domain.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +10,7 @@ class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase
 
     private val searchMovie = MutableLiveData<String>()
     val movie: LiveData<List<Movie>> = Transformations.switchMap(searchMovie) {
-        movieUseCase.searchMoviesByName(it)
+        LiveDataReactiveStreams.fromPublisher(movieUseCase.searchMoviesByName(it))
     }
 
     fun searchMovie(name:String){

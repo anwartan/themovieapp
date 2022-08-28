@@ -1,16 +1,17 @@
 package com.example.themovieapp.core.data.source.remote.network
 
 import com.example.themovieapp.core.data.source.remote.response.ListMovieResponse
-import retrofit2.Call
+import io.reactivex.Flowable
 import retrofit2.http.GET
 
 interface ApiService {
 
     @GET("movie/now_playing")
-    fun getNowPlayingMovies(): Call<ListMovieResponse>
+    fun getNowPlayingMovies(): Flowable<ListMovieResponse>
 
     @GET("movie/popular")
-    fun getPopularMovies(): Call<ListMovieResponse>
+    fun getPopularMovies(): Flowable<ListMovieResponse>
+
     @GET("movie/top_rated")
-    fun getTopRatedMovies(): Call<ListMovieResponse>
+    fun getTopRatedMovies(): Flowable<ListMovieResponse>
 }

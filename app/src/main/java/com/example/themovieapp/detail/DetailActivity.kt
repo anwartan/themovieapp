@@ -4,14 +4,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.themovieapp.MyApplication
 import com.example.themovieapp.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
-import com.example.themovieapp.core.ui.ViewModelFactory
 import com.example.themovieapp.databinding.ActivityDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import javax.inject.Inject
+
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
@@ -46,16 +44,18 @@ class DetailActivity : AppCompatActivity() {
                     .load(ApiConfig.BASE_IMAGE_URL + movie.posterPath)
                     .error(R.drawable.ic_baseline_image_not_supported_24)
                     .into(binding.ivPoster)
-
+                changeFavoriteButton(false)
+                binding.btnFavorite.setOnClickListener {
+                    detailViewModel.setFavoriteMovie(true)
+                }
             }
         })
 
-        detailViewModel.isFavoriteMovie.observe(this, {
+        detailViewModel.isFavoriteMovie.observe(this, { isFavorite ->
 
-            val exist = it !== null
-            changeFavoriteButton(exist)
+            changeFavoriteButton(isFavorite)
             binding.btnFavorite.setOnClickListener {
-                detailViewModel.setFavoriteMovie(!exist)
+                detailViewModel.setFavoriteMovie(!isFavorite)
             }
 
         })
