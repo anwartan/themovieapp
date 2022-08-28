@@ -1,2 +1,4 @@
 rootProject.name = "themovieapp"
 include ':app'
+include ':core'
+include ':search'

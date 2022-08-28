@@ -1,6 +1,5 @@
 package com.example.themovieapp.home
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,17 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.themovieapp.MyApplication
 import com.example.themovieapp.core.data.Resource
 import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.ui.MovieAdapter
-import com.example.themovieapp.core.ui.ViewModelFactory
 import com.example.themovieapp.databinding.FragmentHomeBinding
 import com.example.themovieapp.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {

@@ -1,6 +1,5 @@
 package com.example.themovieapp.favorite
 
-import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.themovieapp.core.domain.usecase.MovieUseCase

@@ -9,10 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.themovieapp.databinding.ActivityMainBinding
-import com.example.themovieapp.detail.DetailActivity
 import com.example.themovieapp.favorite.FavoriteFragment
 import com.example.themovieapp.home.HomeFragment
-import com.example.themovieapp.search.SearchActivity
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,7 +53,9 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             R.id.search_menu ->{
-                val intent = Intent(this, SearchActivity::class.java)
+
+//                val uri = Uri.parse("themovieapp://search")
+                val intent = Intent(this,Class.forName("com.example.themovieapp.search.SearchActivity"))
                 startActivity(intent)
                 return true
             }

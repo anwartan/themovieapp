@@ -14,8 +14,6 @@
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
     <string name="overview">Overview</string>
-    <string name="search_movie">Search Movie</string>
-    <string name="search_result">Search Result</string>
-    <string name="search_title">Search Title</string>
+    <string name="title_search">Search</string>
 
 </resources>
