@@ -7,11 +7,11 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("movie/now_playing")
-    fun getNowPlayingMovies(): Flowable<ListMovieResponse>
+    suspend fun getNowPlayingMovies(): ListMovieResponse
 
     @GET("movie/popular")
-    fun getPopularMovies(): Flowable<ListMovieResponse>
+    suspend fun getPopularMovies(): ListMovieResponse
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(): Flowable<ListMovieResponse>
+    suspend  fun getTopRatedMovies(): ListMovieResponse
 }

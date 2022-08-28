@@ -10,7 +10,7 @@ class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase
 
     private val searchMovie = MutableLiveData<String>()
     val movie: LiveData<List<Movie>> = Transformations.switchMap(searchMovie) {
-        LiveDataReactiveStreams.fromPublisher(movieUseCase.searchMoviesByName(it))
+        movieUseCase.searchMoviesByName(it).asLiveData()
     }
 
     fun searchMovie(name:String){

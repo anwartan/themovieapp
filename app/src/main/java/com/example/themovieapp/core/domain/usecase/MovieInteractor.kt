@@ -5,10 +5,11 @@ import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.domain.model.MovieFavorite
 import com.example.themovieapp.core.domain.repository.IMovieRepository
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieInteractor @Inject constructor (private val movieRepository: IMovieRepository) :MovieUseCase {
-    override fun getNowPlayingMovies(): Flowable<Resource<List<Movie>>> {
+    override fun getNowPlayingMovies(): Flow<Resource<List<Movie>>> {
         return movieRepository.getNowPlayingMovie()
     }
 
@@ -16,27 +17,27 @@ class MovieInteractor @Inject constructor (private val movieRepository: IMovieRe
         return movieRepository.setFavoriteMovie(idMovie,newStatus)
     }
 
-    override fun getFavoriteMovies(): Flowable<List<MovieFavorite>> {
+    override fun getFavoriteMovies(): Flow<List<MovieFavorite>> {
         return movieRepository.getFavoriteMovies()
     }
 
-    override fun getMovieDetail(id: Int):Flowable<Movie?> {
+    override fun getMovieDetail(id: Int):Flow<Movie?> {
         return movieRepository.getMovieDetail(id)
     }
 
-    override fun getPopularMovies(): Flowable<Resource<List<Movie>>> {
+    override fun getPopularMovies(): Flow<Resource<List<Movie>>> {
         return movieRepository.getPopularMovies()
     }
 
-    override fun getTopRatedMovies(): Flowable<Resource<List<Movie>>> {
+    override fun getTopRatedMovies(): Flow<Resource<List<Movie>>> {
         return movieRepository.getTopRatedMovies()
     }
 
-    override fun searchMoviesByName(name: String): Flowable<List<Movie>> {
+    override fun searchMoviesByName(name: String): Flow<List<Movie>> {
         return movieRepository.searchMoviesByName(name)
     }
 
-    override fun getFavoriteMovie(id: Int): Flowable<Boolean> {
+    override fun getFavoriteMovie(id: Int): Flow<Boolean> {
         return movieRepository.getFavoriteMovie(id)
     }
 

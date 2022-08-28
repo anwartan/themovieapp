@@ -1,68 +1,39 @@
 package com.example.themovieapp.core.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import com.example.themovieapp.core.data.source.remote.network.ApiResponse
-import com.example.themovieapp.core.utils.AppExecutors
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-
-abstract class NetworkAndFetch<ResultType,RequestType>(private val mExecutors: AppExecutors) {
-    private val result = PublishSubject.create<Resource<ResultType>>()
-    private val mCompositeDisposable = CompositeDisposable()
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 
 
-    init {
-        fetchFromNetwork()
+abstract class NetworkAndFetch<ResultType,RequestType> {
 
-    }
+    private var result : Flow<Resource<ResultType>> = flow {
 
-    private fun fetchFromNetwork() {
-        val apiResource = createCall()
-        result.onNext(Resource.Loading(null))
-
-        val response = apiResource
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .take(1)
-            .doOnComplete {
-                mCompositeDisposable.dispose()
+        emit(Resource.Loading())
+        when (val apiResponse = createCall().first()) {
+            is ApiResponse.Success ->{
+                onFetchSuccess(apiResponse.data)
+                emit(Resource.Success(mapResponse(apiResponse.data)))
             }
-            .subscribe { apiResponse->
-                when(apiResponse){
-                    is ApiResponse.Success ->{
-                        apiResource.unsubscribeOn(Schedulers.io())
-                        onFetchSuccess(apiResponse.data)
-                        result.onNext(Resource.Success(mapResponse(apiResponse.data)))
-                    }
-                    is ApiResponse.Error -> {
-                        onFetchFailed()
-                        result.onNext(Resource.Error(apiResponse.errorMessage))
-                    }
-                    is ApiResponse.Empty -> {
-                        result.onNext(Resource.Error("EMPTY"))
-                    }
-
-                }
+            is ApiResponse.Error -> {
+                onFetchFailed()
+                emit(Resource.Error<ResultType>(apiResponse.errorMessage))
             }
-        mCompositeDisposable.add(response)
+            is ApiResponse.Empty -> {
+                emit(Resource.Error<ResultType>("EMPTY"))
+            }
+        }
     }
-
 
 
     protected open fun onFetchFailed() {}
 
-    protected abstract fun createCall(): Flowable<ApiResponse<RequestType>>
+    protected abstract suspend fun createCall(): Flow<ApiResponse<RequestType>>
 
-    protected abstract fun onFetchSuccess(data: RequestType)
+    protected abstract suspend fun onFetchSuccess(data: RequestType)
 
-    abstract fun mapResponse(data: RequestType): ResultType
+    protected abstract fun mapResponse(data: RequestType): ResultType
 
-    fun asFlowable(): Flowable<Resource<ResultType>> =
-        result.toFlowable(BackpressureStrategy.BUFFER)
+    fun asFlow(): Flow<Resource<ResultType>> =result
 }

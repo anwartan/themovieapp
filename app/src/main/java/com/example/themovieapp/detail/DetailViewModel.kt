@@ -2,11 +2,10 @@ package com.example.themovieapp.detail
 
 import androidx.lifecycle.*
 import com.example.themovieapp.core.domain.model.Movie
-import com.example.themovieapp.core.domain.model.MovieFavorite
 import com.example.themovieapp.core.domain.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Maybe
 import javax.inject.Inject
+
 @HiltViewModel
 class DetailViewModel @Inject constructor(private val movieUseCase: MovieUseCase):ViewModel() {
 
@@ -14,11 +13,11 @@ class DetailViewModel @Inject constructor(private val movieUseCase: MovieUseCase
 
 
     val detailMovie: LiveData<Movie?> = Transformations.switchMap(idMovie) {
-        LiveDataReactiveStreams.fromPublisher(movieUseCase.getMovieDetail(it))
+        movieUseCase.getMovieDetail(it).asLiveData()
     }
 
     val isFavoriteMovie: LiveData<Boolean> = Transformations.switchMap(idMovie){
-        LiveDataReactiveStreams.fromPublisher(movieUseCase.getFavoriteMovie(it))
+        movieUseCase.getFavoriteMovie(it).asLiveData()
     }
 
 

@@ -5,7 +5,6 @@ import com.example.themovieapp.core.data.source.local.LocalDataSource
 import com.example.themovieapp.core.data.source.remote.RemoteDataSource
 import com.example.themovieapp.core.domain.repository.IMovieRepository
 import com.example.themovieapp.core.utils.AppExecutors
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +25,6 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRepository(remoteDataSource: RemoteDataSource,localDataSource: LocalDataSource,executors: AppExecutors):IMovieRepository = MovieRepository(remoteDataSource = remoteDataSource,appExecutors = executors,localDataSource = localDataSource)
+    fun provideRepository(remoteDataSource: RemoteDataSource,localDataSource: LocalDataSource,executors: AppExecutors):IMovieRepository = MovieRepository(remoteDataSource = remoteDataSource,localDataSource = localDataSource,appExecutors = executors)
 
 }
