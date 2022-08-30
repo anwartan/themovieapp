@@ -56,23 +56,6 @@ class MainActivity : AppCompatActivity() {
         ) || super.onOptionsItemSelected(item)
     }
 
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        var title = getString(R.string.app_name)
-//        when(item.itemId){
-//            R.id.nav_home->{
-//                title = getString(R.string.app_name)
-//            }
-//            R.id.nav_favorite->{
-//                title = getString(R.string.menu_favorite)
-//            }
-//
-//        }
-//
-//        supportActionBar?.title = title
-//
-//        binding.drawerLayout.closeDrawer(GravityCompat.START)
-//        return true
-//    }
 
 
 }
