@@ -1,26 +1,47 @@
 package com.example.themovieapp.favorite
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.themovieapp.MyApplication
+import com.example.themovieapp.R
 import com.example.themovieapp.core.ui.MovieListAdapter
-import com.example.themovieapp.databinding.FragmentFavoriteBinding
 import com.example.themovieapp.detail.DetailActivity
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.themovieapp.di.FavoriteModuleDependecies
+import com.example.themovieapp.favorite.databinding.FragmentFavoriteBinding
+import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
-    private val favoriteViewModel: FavoriteViewModel by viewModels()
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private val favoriteViewModel: FavoriteViewModel by viewModels{
+        factory
+    }
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        DaggerFavoriteComponent.builder().context(context)
+            .appDependencies(
+                EntryPointAccessors.fromApplication(
+                    context,
+                    FavoriteModuleDependecies::class.java
+                )
+            )
+            .build()
+            .inject(this)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,9 +56,9 @@ class FavoriteFragment : Fragment() {
 
             val movieAdapter = MovieListAdapter()
             movieAdapter.onItemClick = { selectedData ->
-                val intent = Intent(activity, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_DATA, selectedData.id)
-                startActivity(intent)
+                val bundle = bundleOf(DetailActivity.EXTRA_DATA to selectedData.id)
+                findNavController().navigate(R.id.action_favoriteFragment_to_detailActivity,bundle)
+
             }
 
             favoriteViewModel.favoriteMovie.observe(viewLifecycleOwner, { movieFavorite ->

@@ -19,11 +19,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-
     @Singleton
     @Provides
-    fun provideApiService(): ApiService {
-
+    fun provideOkHttpClient():OkHttpClient{
         val interceptor = Interceptor { chain ->
             val request = chain.request()
 
@@ -35,12 +33,19 @@ class NetworkModule {
 
             chain.proceed(requestBuilder.build())
         }
-        val client =  OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor(interceptor)
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
+
+    }
+    @Singleton
+    @Provides
+    fun provideApiService(client:OkHttpClient): ApiService {
+
+
         val retrofit = Retrofit.Builder()
             .baseUrl(ApiConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

@@ -15,5 +15,8 @@
     <string name="top_rated">Top Rated</string>
     <string name="overview">Overview</string>
     <string name="title_search">Search</string>
+    <string name="title_favorite">favorite</string>
+    <string name="detail_movie">Detail Movie</string>
+    <string name="search_movie">Search Movie</string>
 
 </resources>

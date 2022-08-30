@@ -25,6 +25,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivitySearchBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerSearchComponent.builder()
@@ -65,5 +66,6 @@ class SearchActivity : AppCompatActivity() {
             adapter = movieListAdapter
         }
     }
+
 
 }

@@ -3,6 +3,7 @@ package com.example.themovieapp.detail
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.themovieapp.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
@@ -27,7 +28,6 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarDetail)
-
         val idMovie = intent.getIntExtra(EXTRA_DATA, -1)
         detailViewModel.getMovieDetail(idMovie)
 

@@ -1,13 +1,15 @@
 package com.example.themovieapp.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.themovieapp.R
 import com.example.themovieapp.core.data.Resource
 import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.ui.MovieAdapter
@@ -17,9 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
-
-
 
     private val homeViewModel: HomeViewModel by viewModels ()
 
@@ -46,27 +45,24 @@ class HomeFragment : Fragment() {
             val popularAdapter = MovieAdapter()
             val topRatedAdapter = MovieAdapter()
             val movieItemClick ={ selectedData:Movie ->
-                val intent = Intent(activity, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_DATA, selectedData.id)
-                startActivity(intent)
+                val bundle = bundleOf(DetailActivity.EXTRA_DATA to selectedData.id)
+                findNavController().navigate(R.id.action_homeFragment_to_detailActivity,bundle)
+
             }
             movieAdapter.onItemClick = movieItemClick
             popularAdapter.onItemClick = movieItemClick
             topRatedAdapter.onItemClick = movieItemClick
-//            val factory = ViewModelFactory.getInstance(requireActivity())
-//            homeViewModel = ViewModelProvider(this,factory)[HomeViewModel::class.java]
-
 
             homeViewModel.movie.observe(viewLifecycleOwner,{movie->
                 if (movie != null) {
                     when (movie) {
-                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                        is Resource.Loading -> binding.progressBarNowPlaying.visibility = View.VISIBLE
                         is Resource.Success -> {
-                            binding.progressBar.visibility = View.GONE
+                            binding.progressBarNowPlaying.visibility = View.GONE
                             movieAdapter.setData(movie.data)
                         }
                         is Resource.Error -> {
-                            binding.progressBar.visibility = View.GONE
+                            binding.progressBarNowPlaying.visibility = View.GONE
                         }
                     }
                 }
@@ -74,26 +70,26 @@ class HomeFragment : Fragment() {
 
             homeViewModel.popularMovie.observe(viewLifecycleOwner,{movie->
                 when (movie) {
-                    is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                    is Resource.Loading -> binding.progressBarPopular.visibility = View.VISIBLE
                     is Resource.Success -> {
-                        binding.progressBar.visibility = View.GONE
+                        binding.progressBarPopular.visibility = View.GONE
                         popularAdapter.setData(movie.data)
                     }
                     is Resource.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                        binding.progressBarPopular.visibility = View.GONE
                     }
                 }
             })
 
             homeViewModel.topRatedMovie.observe(viewLifecycleOwner,{movie->
                 when (movie) {
-                    is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                    is Resource.Loading -> binding.progressBarTopRated.visibility = View.VISIBLE
                     is Resource.Success -> {
-                        binding.progressBar.visibility = View.GONE
+                        binding.progressBarTopRated.visibility = View.GONE
                         topRatedAdapter.setData(movie.data)
                     }
                     is Resource.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                        binding.progressBarTopRated.visibility = View.GONE
                     }
                 }
             })
