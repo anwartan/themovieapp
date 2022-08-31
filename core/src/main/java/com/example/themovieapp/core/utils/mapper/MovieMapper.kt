@@ -1,4 +1,4 @@
-package com.example.themovieapp.core.utils.Mapper
+package com.example.themovieapp.core.utils.mapper
 
 import com.example.themovieapp.core.data.source.local.entity.MovieEntity
 import com.example.themovieapp.core.data.source.remote.response.MovieResponse

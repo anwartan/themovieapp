@@ -12,8 +12,8 @@ import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.domain.model.MovieFavorite
 import com.example.themovieapp.core.domain.repository.IMovieRepository
 import com.example.themovieapp.core.utils.AppExecutors
-import com.example.themovieapp.core.utils.Mapper.MovieFavoriteMapper
-import com.example.themovieapp.core.utils.Mapper.MovieMapper
+import com.example.themovieapp.core.utils.mapper.MovieFavoriteMapper
+import com.example.themovieapp.core.utils.mapper.MovieMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -47,24 +47,6 @@ class MovieRepository @Inject constructor(
             }
 
         }.asFlow()
-//        return object : NetworkAndFetch<List<Movie>,List<MovieResponse>>(){
-//            override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> {
-//                return remoteDataSource.getNowPlayingMovies()
-//            }
-//
-//            override suspend fun onFetchSuccess(data: List<MovieResponse>) {
-//                val movieList= MovieMapper.mapResponsesToEntities(data)
-//                localDataSource.insertMovies(movieList)
-//            }
-//
-//            override fun mapResponse(data: List<MovieResponse>): List<Movie> {
-//                val entity = MovieMapper.mapResponsesToEntities(data)
-//                return MovieMapper.mapEntitiesToDomain(entity)
-//            }
-//
-//
-//        }.asFlow()
-
     }
 
     override fun setFavoriteMovie(idMovie:Int,newStatus:Boolean) {

@@ -1,4 +1,4 @@
-package com.example.themovieapp.core.utils.Mapper
+package com.example.themovieapp.core.utils.mapper
 
 import com.example.themovieapp.core.data.source.local.entity.MovieFavoriteEntity
 import com.example.themovieapp.core.domain.model.MovieFavorite
@@ -10,7 +10,7 @@ object MovieFavoriteMapper {
         }
     }
 
-    fun mapEntityToDomain(input:MovieFavoriteEntity):MovieFavorite{
+    private fun mapEntityToDomain(input:MovieFavoriteEntity):MovieFavorite{
         return MovieFavorite(
             movie = MovieMapper.mapEntityToDomain(input.movieEntity),
             favorite = FavoriteMapper.mapEntityToDomain(input.favoriteEntity)

@@ -10,7 +10,6 @@ import com.example.themovieapp.core.ui.MovieListAdapter
 import com.example.themovieapp.detail.DetailActivity
 import com.example.themovieapp.di.SearchModuleDependecies
 import com.example.themovieapp.search.databinding.ActivitySearchBinding
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
@@ -55,10 +54,10 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        searchViewModel.movie.observe(this, {
+        searchViewModel.movie.observe(this) {
             movieListAdapter.setMovies(it)
 
-        })
+        }
 
         with(binding.rvMovie) {
             layoutManager = LinearLayoutManager(context)

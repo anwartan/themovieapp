@@ -1,7 +1,6 @@
 package com.example.themovieapp.favorite
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.themovieapp.MyApplication
 import com.example.themovieapp.R
 import com.example.themovieapp.core.ui.MovieListAdapter
 import com.example.themovieapp.detail.DetailActivity
@@ -61,12 +59,12 @@ class FavoriteFragment : Fragment() {
 
             }
 
-            favoriteViewModel.favoriteMovie.observe(viewLifecycleOwner, { movieFavorite ->
+            favoriteViewModel.favoriteMovie.observe(viewLifecycleOwner){ movieFavorite ->
                 if (movieFavorite != null) {
                     val movies = movieFavorite.map { it.movie }
                     movieAdapter.setMovies(movies)
                 }
-            })
+            }
 
             with(binding.rvMovie) {
                 layoutManager = LinearLayoutManager(context)

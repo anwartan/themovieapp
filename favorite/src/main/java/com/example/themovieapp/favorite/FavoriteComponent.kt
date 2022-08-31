@@ -2,7 +2,6 @@ package com.example.themovieapp.favorite
 
 import android.content.Context
 import com.example.themovieapp.di.FavoriteModuleDependecies
-import com.example.themovieapp.di.SearchModuleDependecies
 import dagger.BindsInstance
 import dagger.Component
 

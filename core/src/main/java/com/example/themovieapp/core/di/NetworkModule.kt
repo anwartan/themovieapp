@@ -1,5 +1,6 @@
 package com.example.themovieapp.core.di
 
+import com.example.themovieapp.core.BuildConfig
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
 import com.example.themovieapp.core.data.source.remote.network.ApiService
 import dagger.Module
@@ -33,8 +34,13 @@ class NetworkModule {
 
             chain.proceed(requestBuilder.build())
         }
+        val loggingInterceptor = if(BuildConfig.DEBUG) {
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        }else {
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+        }
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(loggingInterceptor)
             .addInterceptor(interceptor)
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)

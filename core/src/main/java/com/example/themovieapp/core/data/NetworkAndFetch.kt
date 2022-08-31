@@ -10,7 +10,7 @@ abstract class NetworkAndFetch<ResultType,RequestType> {
 
     private var result : Flow<Resource<ResultType>> = flow {
 
-        emit(Resource.Loading())
+        emit(Resource.Loading<ResultType>())
         when (val apiResponse = createCall().first()) {
             is ApiResponse.Success ->{
                 onFetchSuccess(apiResponse.data)

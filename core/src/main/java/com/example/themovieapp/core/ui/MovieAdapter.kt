@@ -3,12 +3,14 @@ package com.example.themovieapp.core.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.themovieapp.core.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
 import com.example.themovieapp.core.databinding.ItemListMovieBinding
 import com.example.themovieapp.core.domain.model.Movie
+import com.example.themovieapp.core.utils.CustomDiffUtilCallback
 
 class MovieAdapter:RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
@@ -18,9 +20,12 @@ class MovieAdapter:RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     fun setData(newListData: List<Movie>?) {
         if (newListData == null) return
+        val customDiffUtilCallback = CustomDiffUtilCallback(this.listData,newListData)
+        val diffResult = DiffUtil.calculateDiff(customDiffUtilCallback)
         listData.clear()
         listData.addAll(newListData)
-        notifyDataSetChanged()
+
+        diffResult.dispatchUpdatesTo(this)
     }
 
     inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {

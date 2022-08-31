@@ -21,11 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels ()
-
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +50,7 @@ class HomeFragment : Fragment() {
             popularAdapter.onItemClick = movieItemClick
             topRatedAdapter.onItemClick = movieItemClick
 
-            homeViewModel.movie.observe(viewLifecycleOwner,{movie->
+            homeViewModel.movie.observe(viewLifecycleOwner){movie->
                 if (movie != null) {
                     when (movie) {
                         is Resource.Loading -> binding.progressBarNowPlaying.visibility = View.VISIBLE
@@ -66,9 +63,9 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
-            })
+            }
 
-            homeViewModel.popularMovie.observe(viewLifecycleOwner,{movie->
+            homeViewModel.popularMovie.observe(viewLifecycleOwner){movie->
                 when (movie) {
                     is Resource.Loading -> binding.progressBarPopular.visibility = View.VISIBLE
                     is Resource.Success -> {
@@ -79,9 +76,9 @@ class HomeFragment : Fragment() {
                         binding.progressBarPopular.visibility = View.GONE
                     }
                 }
-            })
+            }
 
-            homeViewModel.topRatedMovie.observe(viewLifecycleOwner,{movie->
+            homeViewModel.topRatedMovie.observe(viewLifecycleOwner){movie->
                 when (movie) {
                     is Resource.Loading -> binding.progressBarTopRated.visibility = View.VISIBLE
                     is Resource.Success -> {
@@ -92,7 +89,7 @@ class HomeFragment : Fragment() {
                         binding.progressBarTopRated.visibility = View.GONE
                     }
                 }
-            })
+            }
 
 
             with(binding.rvMovie) {

@@ -3,7 +3,6 @@ package com.example.themovieapp.detail
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.themovieapp.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
@@ -13,10 +12,6 @@ import java.util.*
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
-
-    companion object {
-        const val EXTRA_DATA = "extra_data"
-    }
 
 
     private val detailViewModel: DetailViewModel by viewModels()
@@ -36,9 +31,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showDetailMovie() {
-        detailViewModel.detailMovie.observe(this, {
+        detailViewModel.detailMovie.observe(this) {
             it?.let { movie ->
-                supportActionBar?.title = movie.title
+                binding.toolbarDetail.title = movie.title
                 binding.tvDescription.text = movie.overview
                 Glide.with(this@DetailActivity)
                     .load(ApiConfig.BASE_IMAGE_URL + movie.posterPath)
@@ -49,16 +44,16 @@ class DetailActivity : AppCompatActivity() {
                     detailViewModel.setFavoriteMovie(true)
                 }
             }
-        })
+        }
 
-        detailViewModel.isFavoriteMovie.observe(this, { isFavorite ->
+        detailViewModel.isFavoriteMovie.observe(this) { isFavorite ->
 
             changeFavoriteButton(isFavorite)
             binding.btnFavorite.setOnClickListener {
                 detailViewModel.setFavoriteMovie(!isFavorite)
             }
 
-        })
+        }
 
     }
 
@@ -69,5 +64,10 @@ class DetailActivity : AppCompatActivity() {
             binding.btnFavorite.icon = getDrawable(R.drawable.ic_baseline_add_24)
         }
     }
+
+    companion object {
+        const val EXTRA_DATA = "extra_data"
+    }
+
 
 }
