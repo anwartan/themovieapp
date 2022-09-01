@@ -1,10 +1,12 @@
 package com.example.themovieapp.core.domain.repository
 
+import android.annotation.SuppressLint
 import com.example.themovieapp.core.data.Resource
 import com.example.themovieapp.core.domain.model.Movie
 import com.example.themovieapp.core.domain.model.MovieFavorite
 import kotlinx.coroutines.flow.Flow
 
+@SuppressLint("NamingPattern")
 interface IMovieRepository {
 
     fun getNowPlayingMovie(): Flow<Resource<List<Movie>>>
