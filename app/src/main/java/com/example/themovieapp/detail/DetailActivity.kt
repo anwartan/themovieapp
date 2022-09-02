@@ -1,5 +1,6 @@
 package com.example.themovieapp.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,18 @@ class DetailActivity : AppCompatActivity() {
                 binding.btnFavorite.setOnClickListener {
                     detailViewModel.setFavoriteMovie(true)
                 }
+                binding.btnShare.icon = getDrawable(R.drawable.ic_baseline_reply_24)
+                binding.btnShare.setOnClickListener {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, "Let's watch this movie with title ${movie.originalTitle}. Click here to see the poster ${ApiConfig.BASE_IMAGE_URL+movie.posterPath}")
+                        type = "text/plain"
+                    }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    startActivity(shareIntent)
+                }
+
             }
         }
 

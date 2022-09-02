@@ -18,5 +18,7 @@
     <string name="title_favorite">favorite</string>
     <string name="detail_movie">Detail Movie</string>
     <string name="search_movie">Search Movie</string>
+    <string name="share">Share</string>
+    <string name="watchlist">Watchlist</string>
 
 </resources>
