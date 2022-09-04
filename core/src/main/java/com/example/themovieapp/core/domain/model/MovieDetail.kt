@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MovieFavorite(
+data class MovieDetail(
     val movie: Movie,
-    val favorite: Favorite
+    val detail: Detail
 ) : Parcelable

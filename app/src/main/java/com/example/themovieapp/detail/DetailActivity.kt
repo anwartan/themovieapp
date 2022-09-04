@@ -9,7 +9,6 @@ import com.example.themovieapp.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
 import com.example.themovieapp.databinding.ActivityDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
@@ -33,40 +32,38 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showDetailMovie() {
         detailViewModel.detailMovie.observe(this) {
-            it?.let { movie ->
-                binding.toolbarDetail.title = movie.title
-                binding.tvDescription.text = movie.overview
+            it?.let { movieDetail ->
+                binding.toolbarDetail.title = movieDetail.movie.title
+                binding.tvDescription.text = movieDetail.movie.overview
                 Glide.with(this@DetailActivity)
-                    .load(ApiConfig.BASE_IMAGE_URL + movie.posterPath)
+                    .load(ApiConfig.BASE_IMAGE_URL + movieDetail.movie.posterPath)
                     .error(R.drawable.ic_baseline_image_not_supported_24)
                     .into(binding.ivPoster)
-                changeFavoriteButton(false)
+                changeFavoriteButton(movieDetail.detail.isFavorite)
+                changeWatchButton(movieDetail.detail.isWatch)
+
                 binding.btnFavorite.setOnClickListener {
-                    detailViewModel.setFavoriteMovie(true)
+                    detailViewModel.setFavoriteMovie(!movieDetail.detail.isFavorite)
                 }
                 binding.btnShare.icon = getDrawable(R.drawable.ic_baseline_reply_24)
                 binding.btnShare.setOnClickListener {
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, "Let's watch this movie with title ${movie.originalTitle}. Click here to see the poster ${ApiConfig.BASE_IMAGE_URL+movie.posterPath}")
+                        putExtra(Intent.EXTRA_TEXT, "Let's watch this movie with title ${movieDetail.movie.originalTitle}. Click here to see the poster ${ApiConfig.BASE_IMAGE_URL+movieDetail.movie.posterPath}")
                         type = "text/plain"
                     }
 
                     val shareIntent = Intent.createChooser(sendIntent, null)
                     startActivity(shareIntent)
                 }
+                binding.btnWatch.setOnClickListener {
+                    detailViewModel.setWatchMovie(!movieDetail.detail.isWatch)
+                }
 
             }
         }
 
-        detailViewModel.isFavoriteMovie.observe(this) { isFavorite ->
 
-            changeFavoriteButton(isFavorite)
-            binding.btnFavorite.setOnClickListener {
-                detailViewModel.setFavoriteMovie(!isFavorite)
-            }
-
-        }
 
     }
 
@@ -75,6 +72,13 @@ class DetailActivity : AppCompatActivity() {
             binding.btnFavorite.icon = getDrawable(R.drawable.ic_baseline_check_24)
         } else {
             binding.btnFavorite.icon = getDrawable(R.drawable.ic_baseline_add_24)
+        }
+    }
+    private fun changeWatchButton(favorite: Boolean) {
+        if (favorite) {
+            binding.btnWatch.icon = getDrawable(R.drawable.ic_baseline_check_24)
+        } else {
+            binding.btnWatch.icon = getDrawable(R.drawable.ic_baseline_add_24)
         }
     }
 

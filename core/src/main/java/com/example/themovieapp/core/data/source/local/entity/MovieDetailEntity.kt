@@ -4,15 +4,15 @@ import androidx.room.Embedded
 import androidx.room.Relation
 
 
-class MovieFavoriteEntity (
+class MovieDetailEntity (
 
 
     @Embedded
-    val favoriteEntity: FavoriteEntity,
+    val detailEntity: DetailEntity,
     @Relation(
         parentColumn = "movieId",
         entityColumn = "id"
     )
     val movieEntity: MovieEntity,
 
-)
+    )

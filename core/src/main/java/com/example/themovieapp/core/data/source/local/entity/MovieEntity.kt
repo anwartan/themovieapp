@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "movie")
-data class MovieEntity (
+data class MovieEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
@@ -35,5 +35,4 @@ data class MovieEntity (
     val adult: Boolean,
     @ColumnInfo(name = "voteCount")
     val voteCount: Int
-
 )

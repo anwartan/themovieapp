@@ -1,7 +1,6 @@
 package com.example.themovieapp.core.data.repository
 
 
-import NetworkBoundResource
 import com.example.themovieapp.core.data.NetworkAndFetch
 import com.example.themovieapp.core.data.Resource
 import com.example.themovieapp.core.data.source.local.LocalDataSource
@@ -9,10 +8,10 @@ import com.example.themovieapp.core.data.source.remote.RemoteDataSource
 import com.example.themovieapp.core.data.source.remote.network.ApiResponse
 import com.example.themovieapp.core.data.source.remote.response.MovieResponse
 import com.example.themovieapp.core.domain.model.Movie
-import com.example.themovieapp.core.domain.model.MovieFavorite
+import com.example.themovieapp.core.domain.model.MovieDetail
 import com.example.themovieapp.core.domain.repository.IMovieRepository
 import com.example.themovieapp.core.utils.AppExecutors
-import com.example.themovieapp.core.utils.mapper.MovieFavoriteMapper
+import com.example.themovieapp.core.utils.mapper.MovieDetailMapper
 import com.example.themovieapp.core.utils.mapper.MovieMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -27,24 +26,24 @@ class MovieRepository @Inject constructor(
 ):IMovieRepository{
 
     override fun getNowPlayingMovie(): Flow<Resource<List<Movie>>> {
-        return object :NetworkBoundResource<List<Movie>,List<MovieResponse>>(){
-            override fun loadFromDB(): Flow<List<Movie>> {
-                return localDataSource.getNowPlayingMovies().map {
-                    MovieMapper.mapEntitiesToDomain(it)
-                }
-            }
+        return object :NetworkAndFetch<List<Movie>,List<MovieResponse>>(){
 
-            override fun shouldFetch(data: List<Movie>?): Boolean {
-                return true
-            }
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> {
                 return remoteDataSource.getNowPlayingMovies()
             }
 
-            override suspend fun saveCallResult(data: List<MovieResponse>) {
-                localDataSource.insertMovies(MovieMapper.mapResponsesToEntities(data))
+            override suspend fun onFetchSuccess(data: List<MovieResponse>){
+                val movieList= MovieMapper.mapResponsesToEntities(data)
+                localDataSource.insertMovies(movieList)
+
             }
+
+            override fun mapResponse(data: List<MovieResponse>): List<Movie> {
+                val entity = MovieMapper.mapResponsesToEntities(data)
+                return MovieMapper.mapEntitiesToDomain(entity)
+            }
+
 
         }.asFlow()
     }
@@ -55,16 +54,16 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    override fun getFavoriteMovies(): Flow<List<MovieFavorite>> {
+    override fun getFavoriteMovies(): Flow<List<MovieDetail>> {
         return localDataSource.getFavoriteMovies().map{
-            MovieFavoriteMapper.mapEntitiesToDomain(it)
+            MovieDetailMapper.mapEntitiesToDomain(it)
         }
     }
 
-    override fun getMovieDetail(id: Int): Flow<Movie?> {
-        return localDataSource.getMovie(id).map{
+    override fun getMovieDetail(id: Int): Flow<MovieDetail?> {
+        return localDataSource.getMovieDetail(id).map {
             it?.let {
-                MovieMapper.mapEntityToDomain(it)
+                MovieDetailMapper.mapEntityToDomain(it)
             }
         }
     }
@@ -118,10 +117,19 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    override fun getFavoriteMovie(id: Int): Flow<Boolean> {
-        return localDataSource.isFavoriteMovie(id)
+
+    override fun getWatchMovies(): Flow<List<MovieDetail>> {
+        return localDataSource.getWatchMovies().map {
+            MovieDetailMapper.mapEntitiesToDomain(it)
+        }
     }
 
+    override fun setWatchMovie(idMovie: Int, newStatus: Boolean) {
+        appExecutors.diskIO().execute{
+            localDataSource.setWatchMovies(idMovie,newStatus)
+
+        }
+    }
 
 
 }

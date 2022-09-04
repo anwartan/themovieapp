@@ -5,10 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity(tableName = "favorite")
-class FavoriteEntity(
+@Entity(tableName = "detail")
+class DetailEntity(
     @PrimaryKey(autoGenerate = true)
     val movieId: Int,
+    val isFavorite: Boolean,
+    val isWatch:Boolean,
     @Nullable
     val createAt: Date?
 )

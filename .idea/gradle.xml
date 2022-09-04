@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/favorite" />
             <option value="$PROJECT_DIR$/lint" />
             <option value="$PROJECT_DIR$/search" />
+            <option value="$PROJECT_DIR$/watchlist" />
           </set>
         </option>
       </GradleProjectSettings>

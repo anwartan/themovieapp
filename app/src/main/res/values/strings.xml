@@ -20,5 +20,6 @@
     <string name="search_movie">Search Movie</string>
     <string name="share">Share</string>
     <string name="watchlist">Watchlist</string>
+    <string name="title_watchlist">Watchlist</string>
 
 </resources>

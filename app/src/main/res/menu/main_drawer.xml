@@ -10,6 +10,9 @@
             android:id="@+id/favoriteFragment"
             android:icon="@drawable/ic_favorite_white"
             android:title="@string/menu_favorite" />
-
+        <item
+            android:id="@+id/watchlistFragment"
+            android:icon="@drawable/ic_baseline_movie_24"
+            android:title="@string/watchlist" />
     </group>
 </menu>

@@ -38,4 +38,13 @@
             android:id="@+id/action_favoriteFragment_to_detailActivity"
             app:destination="@id/detailActivity" />
     </fragment>
+    <fragment
+        android:id="@+id/watchlistFragment"
+        android:name="com.example.themovieapp.watchlist.WatchlistFragment"
+        app:moduleName="themovieapp.watchlist"
+        android:label="@string/watchlist">
+        <action
+            android:id="@+id/action_watchlistFragment_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
 </navigation>

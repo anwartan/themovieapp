@@ -1,11 +1,10 @@
 package com.example.themovieapp.core.data.source.local
 
-import com.example.themovieapp.core.data.source.local.entity.FavoriteEntity
+import com.example.themovieapp.core.data.source.local.entity.DetailEntity
+import com.example.themovieapp.core.data.source.local.entity.MovieDetailEntity
 import com.example.themovieapp.core.data.source.local.entity.MovieEntity
-import com.example.themovieapp.core.data.source.local.entity.MovieFavoriteEntity
 import com.example.themovieapp.core.data.source.local.room.MovieDao
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,33 +12,26 @@ import javax.inject.Singleton
 @Singleton
 class LocalDataSource @Inject constructor(private val movieDao: MovieDao) {
 
-    fun getNowPlayingMovies(): Flow<List<MovieEntity>> = movieDao.getNowPlayingMovies()
-
-    suspend fun insertMovies(movieList: List<MovieEntity>) = movieDao.insertMovies(movieList)
-
-    fun setFavoriteMovie(movieId: Int, newStatus: Boolean) {
-        if (!newStatus) {
-            movieDao.deleteFavoriteMovie(movieId)
-        }else{
-            val favoriteEntity = FavoriteEntity(movieId, Date())
-            movieDao.insertFavoriteMovie(favoriteEntity)
+    suspend fun insertMovies(movieList: List<MovieEntity>) {
+        val listDetail = movieList.map {
+            DetailEntity(it.id, isFavorite = false, isWatch = false, createAt = Date())
         }
-
+        movieDao.insertMovies(movieList)
+        movieDao.insertDetails(listDetail)
     }
 
-    fun getMovie(id: Int): Flow<MovieEntity?> = movieDao.getMovie(id)
+    fun setFavoriteMovie(movieId: Int, newStatus: Boolean) = movieDao.setFavoriteMovie(movieId,newStatus)
+
+    fun getMovieDetail(id: Int): Flow<MovieDetailEntity?> = movieDao.getDetailMovie(id)
 
     fun searchMoviesByName(name: String): Flow<List<MovieEntity>> {
         return movieDao.searchMoviesByName("%$name%")
     }
 
-    fun getFavoriteMovies(): Flow<List<MovieFavoriteEntity>> = movieDao.getFavoriteMovies()
+    fun getFavoriteMovies(): Flow<List<MovieDetailEntity>> = movieDao.getFavoriteMovies()
 
-    fun isFavoriteMovie(id: Int): Flow<Boolean> {
-        return movieDao.getFavoriteMovie(id).map {
-            it.isNotEmpty()
-        }
+    fun getWatchMovies():Flow<List<MovieDetailEntity>> = movieDao.getWatchlistMovie()
 
-    }
+    fun setWatchMovies(movieId:Int, newStatus: Boolean) = movieDao.setWatchMovie(movieId,newStatus)
 
 }

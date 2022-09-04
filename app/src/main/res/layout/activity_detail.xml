@@ -64,19 +64,28 @@
                     android:id="@+id/btn_favorite"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_share"
+                    app:layout_constraintEnd_toStartOf="@id/btn_watch"
                     style="@style/CustomButton"
                     android:text="@string/favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_watch"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_favorite"
+                    app:layout_constraintEnd_toStartOf="@id/btn_share"
+                    style="@style/CustomButton"
+                    android:text="@string/watchlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_share"
-                    style="@style/CustomButton"
-                    android:text="@string/share"
+                    style="@style/CustomIconButton"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btn_favorite"
+                    app:layout_constraintStart_toEndOf="@id/btn_watch"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

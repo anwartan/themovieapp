@@ -2,7 +2,7 @@ package com.example.themovieapp.core.domain.usecase
 
 import com.example.themovieapp.core.data.Resource
 import com.example.themovieapp.core.domain.model.Movie
-import com.example.themovieapp.core.domain.model.MovieFavorite
+import com.example.themovieapp.core.domain.model.MovieDetail
 import com.example.themovieapp.core.domain.repository.IMovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,11 +16,11 @@ class MovieInteractor @Inject constructor (private val movieRepository: IMovieRe
         return movieRepository.setFavoriteMovie(idMovie,newStatus)
     }
 
-    override fun getFavoriteMovies(): Flow<List<MovieFavorite>> {
+    override fun getFavoriteMovies(): Flow<List<MovieDetail>> {
         return movieRepository.getFavoriteMovies()
     }
 
-    override fun getMovieDetail(id: Int):Flow<Movie?> {
+    override fun getMovieDetail(id: Int):Flow<MovieDetail?> {
         return movieRepository.getMovieDetail(id)
     }
 
@@ -36,8 +36,13 @@ class MovieInteractor @Inject constructor (private val movieRepository: IMovieRe
         return movieRepository.searchMoviesByName(name)
     }
 
-    override fun getFavoriteMovie(id: Int): Flow<Boolean> {
-        return movieRepository.getFavoriteMovie(id)
+
+    override fun getWatchMovies(): Flow<List<MovieDetail>> {
+        return movieRepository.getWatchMovies()
+    }
+
+    override fun setWatchMovies(id: Int, newStatus: Boolean) {
+        return movieRepository.setWatchMovie(id,newStatus)
     }
 
 

@@ -5,7 +5,9 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class Favorite(
+data class Detail(
     val movieId: Int,
-    var createAt: Date?
+    var createAt: Date?,
+    val isFavorite:Boolean,
+    val isWatch:Boolean
 ) : Parcelable

@@ -6,6 +6,7 @@
       <module name="themovieapp.core" target="11" />
       <module name="themovieapp.favorite" target="11" />
       <module name="themovieapp.search" target="11" />
+      <module name="themovieapp.watchlist" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -22,6 +22,7 @@ object MovieMapper {
                 adult = it.adult,
                 voteAverage = it.voteAverage,
                 voteCount = it.voteCount,
+
             )
             movieList.add(movie)
         }
@@ -43,12 +44,12 @@ object MovieMapper {
                 releaseDate = it.releaseDate,
                 adult = it.adult,
                 voteAverage = it.voteAverage,
-                voteCount = it.voteCount,
+                voteCount = it.voteCount
             )
         }
 
 
-    fun mapDomainToEntity(input: Movie) = MovieEntity(
+    private fun mapDomainToEntity(input: Movie) = MovieEntity(
         id = input.id,
         overview = input.overview,
         originalLanguage = input.originalLanguage,
@@ -61,7 +62,7 @@ object MovieMapper {
         releaseDate = input.releaseDate,
         adult = input.adult,
         voteAverage = input.voteAverage,
-        voteCount = input.voteCount,
+        voteCount = input.voteCount
     )
     fun mapEntityToDomain(input: MovieEntity) = Movie(
         id = input.id,
@@ -76,6 +77,6 @@ object MovieMapper {
         releaseDate = input.releaseDate,
         adult = input.adult,
         voteAverage = input.voteAverage,
-        voteCount = input.voteCount,
+        voteCount = input.voteCount
     )
 }
