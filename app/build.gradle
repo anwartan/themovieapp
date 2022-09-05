@@ -39,10 +39,14 @@ android {
         dataBinding true
     }
     dynamicFeatures = [':search', ':favorite', ':watchlist']
-    lintOptions { checkReleaseBuilds false }
+    lintOptions {
+        checkReleaseBuilds false
+        disable "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation", "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"
+    }
 }
 
 dependencies {
+    lintChecks project(':lint')
 
     implementation project(":core")
     implementation fileTree(dir: 'libs', include: ['*.jar'])

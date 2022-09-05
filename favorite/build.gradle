@@ -11,11 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.themovieapp.favorite"
         minSdkVersion 24
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,7 +25,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    lintOptions { checkReleaseBuilds false }
+    lintOptions {
+        checkReleaseBuilds false
+        disable "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation", "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"
+    }
 }
 
 dependencies {
