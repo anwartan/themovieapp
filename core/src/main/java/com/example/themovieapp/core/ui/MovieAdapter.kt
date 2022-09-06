@@ -16,7 +16,7 @@ class MovieAdapter:RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
 
     var onItemClick: ((Movie) -> Unit)? = null
-    private var listData = ArrayList<Movie>()
+    private val listData = ArrayList<Movie>()
 
     fun setData(newListData: List<Movie>?) {
         if (newListData == null) return

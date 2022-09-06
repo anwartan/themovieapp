@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
 import com.example.themovieapp.R
 import com.example.themovieapp.core.data.source.remote.network.ApiConfig
@@ -45,11 +46,11 @@ class DetailActivity : AppCompatActivity() {
                 binding.btnFavorite.setOnClickListener {
                     detailViewModel.setFavoriteMovie(!movieDetail.detail.isFavorite)
                 }
-                binding.btnShare.icon = getDrawable(R.drawable.ic_baseline_reply_24)
+                binding.btnShare.icon = AppCompatResources.getDrawable(this,R.drawable.ic_baseline_reply_24)
                 binding.btnShare.setOnClickListener {
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, "Let's watch this movie with title ${movieDetail.movie.originalTitle}. Click here to see the poster ${ApiConfig.BASE_IMAGE_URL+movieDetail.movie.posterPath}")
+                        putExtra(Intent.EXTRA_TEXT, getString(R.string.share_description, ApiConfig.BASE_IMAGE_URL+movieDetail.movie.posterPath))
                         type = "text/plain"
                     }
 
@@ -69,16 +70,16 @@ class DetailActivity : AppCompatActivity() {
 
     private fun changeFavoriteButton(favorite: Boolean) {
         if (favorite) {
-            binding.btnFavorite.icon = getDrawable(R.drawable.ic_baseline_check_24)
+            binding.btnFavorite.icon = AppCompatResources.getDrawable(this,R.drawable.ic_baseline_check_24)
         } else {
-            binding.btnFavorite.icon = getDrawable(R.drawable.ic_baseline_add_24)
+            binding.btnFavorite.icon = AppCompatResources.getDrawable(this,R.drawable.ic_baseline_add_24)
         }
     }
     private fun changeWatchButton(favorite: Boolean) {
         if (favorite) {
-            binding.btnWatch.icon = getDrawable(R.drawable.ic_baseline_check_24)
+            binding.btnWatch.icon = AppCompatResources.getDrawable(this,R.drawable.ic_baseline_check_24)
         } else {
-            binding.btnWatch.icon = getDrawable(R.drawable.ic_baseline_add_24)
+            binding.btnWatch.icon = AppCompatResources.getDrawable(this,R.drawable.ic_baseline_add_24)
         }
     }
 

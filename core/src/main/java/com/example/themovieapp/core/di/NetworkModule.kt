@@ -27,8 +27,8 @@ class NetworkModule {
 
         val hostname = "api.themoviedb.org"
         val certificatePinner = CertificatePinner.Builder()
-            .add(hostname, "sha256/oD/WAoRPvbez1Y2dfYfuo4yujAcYHXdv1Ivb2v2MOKk=")
-            .add(hostname,"sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=")
+            .add(hostname, BuildConfig.SSL_PINNING_ONE)
+            .add(hostname,BuildConfig.SSL_PINNING_TWO)
             .build()
         val interceptor = Interceptor { chain ->
             val request = chain.request()

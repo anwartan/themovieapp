@@ -11,13 +11,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-//@Module(includes = [NetworkModule::class, DatabaseModule::class])
-//abstract class RepositoryModule {
-//
-//    @Binds
-//    abstract fun provideRepository(movieRepository: MovieRepository):IMovieRepository
-//
-//}
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -25,6 +18,14 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRepository(remoteDataSource: RemoteDataSource,localDataSource: LocalDataSource,executors: AppExecutors):IMovieRepository = MovieRepository(remoteDataSource = remoteDataSource,localDataSource = localDataSource,appExecutors = executors)
+    fun provideRepository(
+        remoteDataSource: RemoteDataSource,
+        localDataSource: LocalDataSource,
+        executors: AppExecutors
+    ): IMovieRepository = MovieRepository(
+        remoteDataSource = remoteDataSource,
+        localDataSource = localDataSource,
+        appExecutors = executors
+    )
 
 }
