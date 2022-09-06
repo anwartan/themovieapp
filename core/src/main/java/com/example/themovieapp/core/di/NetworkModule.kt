@@ -25,7 +25,7 @@ class NetworkModule {
     @Provides
     fun provideOkHttpClient():OkHttpClient{
 
-        val hostname = "api.themoviedb.org"
+        val hostname = BuildConfig.API_URL
         val certificatePinner = CertificatePinner.Builder()
             .add(hostname, BuildConfig.SSL_PINNING_ONE)
             .add(hostname,BuildConfig.SSL_PINNING_TWO)

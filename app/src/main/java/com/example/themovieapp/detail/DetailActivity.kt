@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
                 binding.btnShare.setOnClickListener {
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, getString(R.string.share_description, ApiConfig.BASE_IMAGE_URL+movieDetail.movie.posterPath))
+                        putExtra(Intent.EXTRA_TEXT, getString(R.string.share_description, movieDetail.movie.originalTitle,ApiConfig.BASE_IMAGE_URL+movieDetail.movie.posterPath))
                         type = "text/plain"
                     }
 

@@ -20,9 +20,19 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "String", "API_URL", "\"api.themoviedb.org\""
+            buildConfigField "String", "SSL_PINNING_ONE", "sha256/oD/WAoRPvbez1Y2dfYfuo4yujAcYHXdv1Ivb2v2MOKk="
+            buildConfigField "String", "SSL_PINNING_TWO", "sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI="
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField "String", "API_URL", "\"api.themoviedb.org\""
+            buildConfigField "String", "SSL_PINNING_ONE", "\"sha256/oD/WAoRPvbez1Y2dfYfuo4yujAcYHXdv1Ivb2v2MOKk=\""
+            buildConfigField "String", "SSL_PINNING_TWO", "\"sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=\""
+
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

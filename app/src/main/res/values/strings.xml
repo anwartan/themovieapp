@@ -16,6 +16,6 @@
     <string name="search_movie">Search Movie</string>
     <string name="watchlist">Watchlist</string>
     <string name="title_watchlist">Watchlist</string>
-    <string name="share_description">Let\'s watch this movie with title %1$s . Click here to see the poster %1$s</string>
+    <string name="share_description">Let\'s watch this movie with title %1$s . Click here to see the poster %2$s</string>
 
 </resources>
