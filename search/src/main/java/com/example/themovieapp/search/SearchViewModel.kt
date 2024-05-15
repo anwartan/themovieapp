@@ -9,7 +9,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase):ViewModel() {
 
     private val searchMovie = MutableLiveData<String>()
-    val movie: LiveData<List<Movie>> = Transformations.switchMap(searchMovie) {
+    val movie: LiveData<List<Movie>> = searchMovie.switchMap {
         movieUseCase.searchMoviesByName(it).asLiveData()
     }
 

@@ -2,11 +2,11 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
-      <module name="themovieapp.app" target="11" />
-      <module name="themovieapp.core" target="11" />
-      <module name="themovieapp.favorite" target="11" />
-      <module name="themovieapp.search" target="11" />
-      <module name="themovieapp.watchlist" target="11" />
+      <module name="themovieapp.app" target="17" />
+      <module name="themovieapp.core" target="17" />
+      <module name="themovieapp.favorite" target="17" />
+      <module name="themovieapp.search" target="17" />
+      <module name="themovieapp.watchlist" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

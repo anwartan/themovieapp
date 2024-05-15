@@ -12,7 +12,7 @@ class DetailViewModel @Inject constructor(private val movieUseCase: MovieUseCase
     private val idMovie = MutableLiveData<Int>()
 
 
-    val detailMovie: LiveData<MovieDetail?> = Transformations.switchMap(idMovie) {
+    val detailMovie: LiveData<MovieDetail?> = idMovie.switchMap {
         movieUseCase.getMovieDetail(it).asLiveData()
     }
 

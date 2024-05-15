@@ -17,7 +17,7 @@ object MovieMapper {
                 title = it.title,
                 posterPath = it.posterPath,
                 popularity = it.popularity,
-                backdropPath = it.backdropPath,
+                backdropPath = it.backdropPath.orEmpty(),
                 releaseDate = it.releaseDate,
                 adult = it.adult,
                 voteAverage = it.voteAverage,
